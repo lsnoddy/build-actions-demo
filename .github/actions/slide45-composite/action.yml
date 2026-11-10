@@ -1,0 +1,26 @@
+name: "Hello Composite Action"
+description: "A composite action to greet someone and print the current date"
+author: "octocat@github.com"
+
+inputs:
+  my_name:
+    description: "Who to greet"
+    required: true
+    default: "World"
+
+outputs:
+  greeting_message:
+    description: "The greeting message"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Print greeting
+      run: echo "Hello ${{ inputs.my_name }}!"
+
+    - name: Set greeting output
+      id: greeting
+      run: echo "::set-output name=greeting_message::Hello ${{ inputs.my_name }}!"
+
+    - name: Print current date
+      run: date

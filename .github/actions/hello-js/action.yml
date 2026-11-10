@@ -1,0 +1,16 @@
+name: Hello JavaScript
+description: Greets someone from Node.js
+
+inputs:
+  who:
+    description: Who to greet
+    required: true
+    default: World
+
+outputs:
+  greeting:
+    description: The full greeting
+
+runs:
+  using: node24
+  main: index.js
