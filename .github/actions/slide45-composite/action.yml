@@ -11,23 +11,16 @@ inputs:
 outputs:
   greeting_message:
     description: "The greeting message"
-    value: ${{ steps.greeting.outputs.greeting_message }}
 
 runs:
   using: "composite"
   steps:
     - name: Print greeting
       run: echo "Hello ${{ inputs.my_name }}!"
-      shell: bash 
 
     - name: Set greeting output
       id: greeting
-      shell: bash 
-      env:
-        MY_NAME: ${{ inputs.my_name }}
-      run: echo "greeting_message=Hello $MY_NAME!" >> "$GITHUB_OUTPUT"
-      
+      run: echo "::set-output name=greeting_message::Hello ${{ inputs.my_name }}!"
 
     - name: Print current date
       run: date
-      shell: bash 
