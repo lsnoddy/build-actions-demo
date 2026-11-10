@@ -22,10 +22,11 @@ runs:
 
     - name: Set greeting output
       id: greeting
+      shell: bash 
       env:
         MY_NAME: ${{ inputs.my_name }}
-      run: run: echo "greeting_message=Hello $MY_NAME!" >> "$GITHUB_OUTPUT"
-      shell: bash 
+      run: echo "greeting_message=Hello $MY_NAME!" >> "$GITHUB_OUTPUT"
+      
 
     - name: Print current date
       run: date
