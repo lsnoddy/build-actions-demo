@@ -18,7 +18,7 @@ jobs:
 
       - name: Pinned to the full commit SHA
         id: by_sha
-        uses: lsnoddy/greet-action@c673f14230b039f13d934c3aceefe7914634a07a # v1.0.0
+        uses: lsnoddy/greet-action@PASTE_FULL_SHA_HERE # v1.0.0
         with:
           who: SHA pin
 
