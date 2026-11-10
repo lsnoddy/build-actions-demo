@@ -1,0 +1,31 @@
+name: Demo 5 - Use the released action
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pinned to the release tag
+        id: by_tag
+        uses: OWNER/greet-action@v1.0.0
+        with:
+          who: tag pin
+
+      - name: Pinned to the full commit SHA
+        id: by_sha
+        uses: OWNER/greet-action@PASTE_FULL_SHA_HERE # v1.0.0
+        with:
+          who: SHA pin
+
+      - name: Show both outputs
+        env:
+          BY_TAG: ${{ steps.by_tag.outputs.greeting }}
+          BY_SHA: ${{ steps.by_sha.outputs.greeting }}
+        run: |
+          echo "Tag pin: $BY_TAG"
+          echo "SHA pin: $BY_SHA"

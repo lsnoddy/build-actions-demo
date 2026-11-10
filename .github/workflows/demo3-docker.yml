@@ -1,0 +1,42 @@
+name: Demo 3 - Docker container action
+
+on:
+  workflow_dispatch:
+    inputs:
+      who:
+        description: Who to greet
+        default: Mona
+      runner:
+        description: Runner to use
+        type: choice
+        options:
+          - ubuntu-latest
+          - windows-latest
+        default: ubuntu-latest
+
+permissions:
+  contents: read
+
+jobs:
+  greet:
+    runs-on: ${{ inputs.runner }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v7
+
+      - name: Is figlet on the runner?
+        shell: bash
+        run: figlet "runner" || echo "figlet is not installed on this runner"
+
+      - name: Greet from inside a container
+        id: docker
+        uses: ./.github/actions/hello-docker
+        with:
+          who: ${{ inputs.who }}
+
+      - name: Use the output
+        shell: bash
+        env:
+          GREETING: ${{ steps.docker.outputs.greeting }}
+        run: |
+          echo "The action said: $GREETING"

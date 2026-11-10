@@ -1,0 +1,33 @@
+name: Demo 4 - Fix the slide 45 composite action
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: Who to greet
+        default: Octocat
+
+permissions:
+  contents: read
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v7
+
+      - name: Run the slide 45 composite action
+        id: hello
+        uses: ./.github/actions/slide45-composite
+        with:
+          my_name: ${{ inputs.name }}
+
+      - name: Use its output
+        env:
+          MESSAGE: ${{ steps.hello.outputs.greeting_message }}
+        run: |
+          if [ -z "$MESSAGE" ]; then
+            echo "::warning title=Empty output::The action returned no greeting_message"
+          fi
+          echo "greeting_message: '$MESSAGE'"

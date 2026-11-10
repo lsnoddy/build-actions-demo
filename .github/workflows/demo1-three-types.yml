@@ -1,0 +1,53 @@
+name: Demo 1 - One contract, three action types
+
+on:
+  workflow_dispatch:
+    inputs:
+      who:
+        description: Who to greet
+        default: Mona
+
+permissions:
+  contents: read
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v7
+
+      - name: JavaScript action
+        id: js
+        uses: ./.github/actions/hello-js
+        with:
+          who: ${{ inputs.who }}
+
+      - name: Docker container action
+        id: docker
+        uses: ./.github/actions/hello-docker
+        with:
+          who: ${{ inputs.who }}
+
+      - name: Composite action
+        id: composite
+        uses: ./.github/actions/hello-composite
+        with:
+          who: ${{ inputs.who }}
+
+      - name: Compare the three outputs
+        env:
+          JS: ${{ steps.js.outputs.greeting }}
+          DOCKER: ${{ steps.docker.outputs.greeting }}
+          COMPOSITE: ${{ steps.composite.outputs.greeting }}
+        run: |
+          {
+            echo "### Same contract, three runtimes"
+            echo ""
+            echo "| Type | Output |"
+            echo "|---|---|"
+            echo "| JavaScript | $JS |"
+            echo "| Docker | $DOCKER |"
+            echo "| Composite | $COMPOSITE |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          printf '%s\n' "$JS" "$DOCKER" "$COMPOSITE"

@@ -1,0 +1,48 @@
+name: Demo 2 - JavaScript action
+
+on:
+  workflow_dispatch:
+    inputs:
+      who:
+        description: Who to greet (clear it to see the failure)
+        required: false
+        default: Mona
+      use_toolkit:
+        description: Use the toolkit version
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v7
+
+      - name: Greet (no dependencies)
+        id: plain
+        if: ${{ !inputs.use_toolkit }}
+        uses: ./.github/actions/hello-js
+        with:
+          who: ${{ inputs.who }}
+
+      - name: Install the toolkit (demo shortcut)
+        if: ${{ inputs.use_toolkit }}
+        working-directory: .github/actions/hello-js-toolkit
+        run: npm install --omit=dev --no-audit --no-fund
+
+      - name: Greet (toolkit)
+        id: toolkit
+        if: ${{ inputs.use_toolkit }}
+        uses: ./.github/actions/hello-js-toolkit
+        with:
+          who: ${{ inputs.who }}
+
+      - name: Use the output
+        env:
+          GREETING: ${{ steps.plain.outputs.greeting || steps.toolkit.outputs.greeting }}
+        run: |
+          echo "The action said: $GREETING"
