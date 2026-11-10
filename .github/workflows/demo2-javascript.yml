@@ -6,7 +6,6 @@ on:
       who:
         description: Who to greet (clear it to see the failure)
         required: false
-        default: Mona
       use_toolkit:
         description: Use the toolkit version
         type: boolean
