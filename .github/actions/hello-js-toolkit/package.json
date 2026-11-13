@@ -1,9 +1,0 @@
-{
-  "name": "hello-js-toolkit",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "@actions/core": "^3.0.1"
-  }
-}
