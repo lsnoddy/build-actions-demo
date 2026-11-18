@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Pinned to the release tag
         id: by_tag
-        uses: lsnoddy/greet-action@v1.0.0
+        uses: lsnoddy/greet-action@v1.0.3
         with:
           who: tag pin
 
