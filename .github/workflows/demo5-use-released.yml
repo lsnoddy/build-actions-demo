@@ -12,13 +12,13 @@ jobs:
     steps:
       - name: Pinned to the release tag
         id: by_tag
-        uses: lsnoddy/greet-action@v1.0.3
+        uses: lsnoddy/greet-action@v1.0.4
         with:
           who: tag pin
 
       - name: Pinned to the full commit SHA
         id: by_sha
-        uses: lsnoddy/greet-action@PASTE_FULL_SHA_HERE 
+        uses: lsnoddy/greet-action@8deff511c9eabd0566f7ceb533362f567b8c4698 
         with:
           who: SHA pin
 
