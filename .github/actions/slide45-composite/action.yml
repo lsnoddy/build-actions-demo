@@ -17,10 +17,13 @@ runs:
   steps:
     - name: Print greeting
       run: echo "Hello ${{ inputs.my_name }}!"
+      shell: bash 
 
     - name: Set greeting output
       id: greeting
       run: echo "::set-output name=greeting_message::Hello ${{ inputs.my_name }}!"
+      shell: bash 
 
     - name: Print current date
       run: date
+      shell: bash 
